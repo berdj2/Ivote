@@ -4,6 +4,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VoterController; 
 use App\Admin\Controllers\VoterController as AdminVoterController; 
+use App\Http\Controllers\FeedbackController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,24 +26,21 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
  
     Route::prefix('Voters')->group(function () {
-        Route::get('', [VoterController::class, 'index'])->name('Voters');
+        Route::get('', [AdminVoterController::class, 'index'])->name('Voters');
         Route::get('create', [VoterController::class, 'create'])->name('Voters.create');
-        Route::post('store', [VoterController::class, 'store'])->name('Voters.store');
-        Route::get('show/{id}', [VoterController::class, 'show'])->name('Voters.show');
-        Route::get('edit/{id}', [VoterController::class, 'edit'])->name('Voters.edit');
-        Route::put('edit/{id}', [VoterController::class, 'update'])->name('Voters.update');
-        Route::delete('destroy/{id}', [VoterController::class, 'destroy'])->name('Voters.destroy');
+        Route::post('store', [AdminVoterController::class, 'store'])->name('Voters.store');
+        Route::get('show/{id}', [AdminVoterController::class, 'show'])->name('Voters.show');
+        Route::get('edit/{id}', [AdminVoterController::class, 'edit'])->name('Voters.edit');
+        Route::put('edit/{id}', [AdminVoterController::class, 'update'])->name('Voters.update');
+        Route::delete('destroy/{id}', [AdminVoterController::class, 'destroy'])->name('Voters.destroy');
+        Route::get('/feedback', [FeedbackController::class, 'showFeedbackForm'])->name('feedback.form');
+        Route::post('/feedback', [FeedbackController::class, 'submitFeedback'])->name('feedback.submit');
+
     });
 
-    Route::prefix('admin/Voters')->group(function () {
-        Route::get('admin/Voters', [AdminVoterController::class, 'index'])->name('AdminVoters');
-        Route::get('create', [AdminVoterController::class, 'create'])->name('AdminVoters.create');
-        Route::post('store', [AdminVoterController::class, 'store'])->name('AdminVoters.store');
-        Route::get('show/{id}', [AdminVoterController::class, 'show'])->name('AdminVoters.show');
-        Route::get('edit/{id}', [AdminVoterController::class, 'edit'])->name('AdminVoters.edit');
-        Route::put('edit/{id}', [AdminVoterController::class, 'update'])->name('AdminVoters.update');
-        Route::delete('destroy/{id}', [AdminVoterController::class, 'destroy'])->name('AdminVoters.destroy');
-    });
+   
 
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
 });
+
+// Route::resource('Voters', VoterController::class);

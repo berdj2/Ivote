@@ -21,7 +21,7 @@
   <li class="nav-item">
     <a class="nav-link" href="{{ route('Voters') }}">
       <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>Voter</span></a>
+      <span>Feedback</span></a>
   </li>
   
   <li class="nav-item">
